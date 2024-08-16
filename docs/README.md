@@ -17,14 +17,14 @@
     - `camp.nextstep.edu.missionutils.Console`의 `readLine()`을 활용
     - 선택한 3개의 숫자가 기존의 숫자와 중복이 아닌지 확인
         - **validateStringThreeNumberDuplicate** 메서드 구현
-          - 사용자 입력값이 1~9 사이의 서로 다른 세자리 숫자인지 여부 확인
+          - 사용자 입력값을 매개변수로 받아 1~9 사이의 서로 다른 세자리 숫자이면 통과
           - 잘못된 값을 입력한 경우 `IllegalArgumentException` 예외 발생시킨 후 애플리케이션 종료
           - **validateThreeNumberLength** 메서드 구현
-            - 문자열의 길이가 3이 맞는지 확인
+            - 사용자 입력값을 매개변수로 받아 문자열의 길이가 3이 맞으면 통과
           - **validateThreeNaturalNumber** 메서드 구현
-            - 문자열이 자연수로 이루어져 있는지 확인
+            - 사용자 입력값을 매개변수로 받아 문자열이 자연수로 이루어져 있으면 통과
           - **validateThreeNumberDuplicate** 메서드 구현
-            - 3개의 숫자가 모두 다른지 확인
+            - 사용자 입력값을 매개변수로 받아 3개의 숫자가 모두 다르면 통과
     - **playerNumberStringToInt** 메서드 구현
       - 문자열을 입력받아 세개의 정수(각 자릿수)를 요소로 하는 리스트 반환
       - playerNumberList에 저장
