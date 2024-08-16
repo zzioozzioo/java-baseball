@@ -18,6 +18,7 @@ public class Application {
         // TODO: 메서드 length, indent depth 확인하기
         // TODO: 코드 한 줄에 점(.) 하나만 허용
         // TODO: 메서드 인자 수 줄여보기(2개 이하로)
+        // TODO: 기능별 커밋..? 기능별로 클래스를 다 분리하라는 말인 건가
 
         while (true) {
 
@@ -34,11 +35,11 @@ public class Application {
                 int strike = countStrike(randomComputerNumberList, playerNumberList);
                 int ball = countBall(randomComputerNumberList, playerNumberList);
 
-                if (printPlayResult(strike, ball)) { // true이면 게임 종료
+                if (isGameSuccess(strike, ball)) { // true이면 게임 종료
                     break;
                 }
             }
-            if (!chooseRestartOrExit()) { // 재시작: true
+            if (!restartGame()) { // 재시작: true
                 return;
             }
         }
@@ -172,8 +173,7 @@ public class Application {
         return false;
     }
 
-    // TODO: 메서드명 수정(반환값 boolean에 맞춰서 다시 고민)
-    private static boolean printPlayResult(int strike, int ball) {
+    private static boolean isGameSuccess(int strike, int ball) {
         if (strike == 0 && ball == 0) {
             System.out.println(NOTHING);
             return false;
@@ -187,8 +187,7 @@ public class Application {
         return false;
     }
 
-    // TODO: 메서드명 수정(반환값 boolean에 맞춰서 다시 고민)
-    private static boolean chooseRestartOrExit() {
+    private static boolean restartGame() {
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
         String userInput = readLine();
@@ -199,7 +198,6 @@ public class Application {
         // TODO: 굳이 정수로 변환해야 할 필요가 있을까? 예외는 모두 isOneOrTwo에서 처리할 텐데 그냥 바꿔서 써도 되지 않을까?
         int integerUserInput = Integer.valueOf(userInput);
 
-        // restartGame() 어때?
         if (integerUserInput == RESTART_NUM) {
             return true;
         }
