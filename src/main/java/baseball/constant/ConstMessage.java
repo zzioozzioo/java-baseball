@@ -16,6 +16,6 @@ public final class ConstMessage {
 
     public static final String ALL_STRIKE_AND_EXIT_MESSAGE = ConstNumber.NUM_LENGTH + "개의 숫자를 모두 맞히셨습니다! 게임 종료";
 
-    public static final String CHOOSE_RESTART_OR_EXIT_MESSAGE = "게임을 새로 시작하려면 " + ConstNumber.RESTART_NUM + ", 종료하려면" + ConstNumber.EXIT_NUM + "를 입력하세요.";
+    public static final String CHOOSE_RESTART_OR_EXIT_MESSAGE = "게임을 새로 시작하려면 " + ConstNumber.RESTART_NUM + ", 종료하려면 " + ConstNumber.EXIT_NUM + "를 입력하세요.";
 
 }
