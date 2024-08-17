@@ -4,11 +4,13 @@ package baseball;
 import java.util.ArrayList;
 import java.util.List;
 
+import static baseball.validation.InputValidation.validateStringThreeNumberDuplicate;
 import static camp.nextstep.edu.missionutils.Console.*;
 import static camp.nextstep.edu.missionutils.Randoms.*;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
+
 
 public class Application {
     public static void main(String[] args) {
@@ -23,9 +25,7 @@ public class Application {
 
         while (true) {
 
-            List<Integer> randomComputerNumberList = new ArrayList<>(NUM_LENGTH);
-
-            randomComputerNumberList = getRandomComputerNumbers();
+            List<Integer> randomComputerNumberList = getRandomComputerNumbers();
 
             while (true) {
                 List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
@@ -60,41 +60,13 @@ public class Application {
         return computer;
     }
 
-    private static List<Integer> getPlayerNumbers(List<Integer> playerNumberList) {
+    public static List<Integer> getPlayerNumbers(List<Integer> playerNumberList) {
         String userInput = readLine();
 
         playerNumberList = playerNumberStringToInt(userInput);
         validateStringThreeNumberDuplicate(playerNumberList);
 
         return playerNumberList;
-    }
-
-    private static void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
-
-        validateThreeNumberLength(playerNumberList);
-        validateThreeNaturalNumber(playerNumberList);
-        validateThreeNumberDuplicate(playerNumberList);
-    }
-
-    private static void validateThreeNumberLength(List<Integer> playerNumberList) {
-
-        if (playerNumberList.size() != NUM_LENGTH) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private static void validateThreeNaturalNumber(List<Integer> playerNumberList) {
-
-        if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
-    }
-
-    private static void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
-
-        if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
     }
 
     private static List<Integer> playerNumberStringToInt(String userInput) {
