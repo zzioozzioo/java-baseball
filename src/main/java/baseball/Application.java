@@ -15,22 +15,25 @@ public class Application {
 
         System.out.println(START_GAME_MESSAGE);
 
-        // TODO: 메서드 length, indent depth 확인하기
         // TODO: 코드 한 줄에 점(.) 하나만 허용
         // TODO: 메서드 인자 수 줄여보기(2개 이하로)
         // TODO: 기능별 커밋..? 기능별로 클래스를 다 분리하라는 말인 건가
+        // TODO: 코드를 성격별로 분류해야 하는데, 어떻게 설계하면 좋을까
+        // TODO: 에러 메시지 더 상세하게 작성하기
 
         while (true) {
 
-            List<Integer> randomComputerNumberList = new ArrayList<>();
+            List<Integer> randomComputerNumberList = new ArrayList<>(NUM_LENGTH);
 
             randomComputerNumberList = getRandomComputerNumbers();
 
             while (true) {
-                List<Integer> playerNumberList = new ArrayList<>();
+                List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
 
+                // TODO: 리스트로 미리 변경해서 validation 검사하는 게 효율적일 듯..
                 System.out.println(INPUT_NUMBER_MESSAGE);
-                playerNumberList = getPlayerNumbers();
+
+                playerNumberList = getPlayerNumbers(playerNumberList);
 
                 int strike = countStrike(randomComputerNumberList, playerNumberList);
                 int ball = countBall(randomComputerNumberList, playerNumberList);
@@ -57,66 +60,41 @@ public class Application {
         return computer;
     }
 
-    private static List<Integer> getPlayerNumbers() {
+    private static List<Integer> getPlayerNumbers(List<Integer> playerNumberList) {
         String userInput = readLine();
 
-        if(!validateStringThreeNumberDuplicate(userInput)) {
+        playerNumberList = playerNumberStringToInt(userInput);
+        validateStringThreeNumberDuplicate(playerNumberList);
+
+        return playerNumberList;
+    }
+
+    private static void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
+
+        validateThreeNumberLength(playerNumberList);
+        validateThreeNaturalNumber(playerNumberList);
+        validateThreeNumberDuplicate(playerNumberList);
+    }
+
+    private static void validateThreeNumberLength(List<Integer> playerNumberList) {
+
+        if (playerNumberList.size() != NUM_LENGTH) {
             throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
-
-        return playerNumberStringToInt(userInput);
     }
 
-    private static boolean validateStringThreeNumberDuplicate(String userInput) {
+    private static void validateThreeNaturalNumber(List<Integer> playerNumberList) {
 
-        int passException = 0;
-        if (validateThreeNumberLength(userInput)) {
-            passException++;
+        if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
-        if (validateThreeNaturalNumber(userInput)) {
-            passException++;
-        }
-        if (validateThreeNumberDuplicate(userInput)) {
-            passException++;
-        }
-
-        if (passException == 3) { // 모든 예외 처리 통과
-            return true;
-        }
-        return false;
     }
 
-    private static boolean validateThreeNumberLength(String userInput) {
+    private static void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
 
-        if (userInput.length() == NUM_LENGTH) {
-            return true;
+        if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
-        return false;
-    }
-
-    private static boolean validateThreeNaturalNumber(String userInput) {
-
-        // TODO: 자연수 판별하는 더 좋은 방법 연구
-        if (Integer.valueOf(userInput) > 0 && userInput.chars().allMatch(Character::isDigit)) {
-            return true;
-        }
-        return false;
-    }
-
-    private static boolean validateThreeNumberDuplicate(String userInput) {
-
-        // TODO: 세 숫자 중복 검사하는 더 좋은 방법 연구
-        List<Integer> duplicateCheckList = new ArrayList<>();
-        int index = 0;
-        while (duplicateCheckList.size() < NUM_LENGTH) {
-            int targetNum = Character.getNumericValue(userInput.charAt(index));
-            index++;
-            if (duplicateCheckList.contains(targetNum)) {
-                return false;
-            }
-            duplicateCheckList.add(targetNum);
-        }
-        return true;
     }
 
     private static List<Integer> playerNumberStringToInt(String userInput) {
@@ -211,7 +189,7 @@ public class Application {
             passException++;
         }
         // TODO: StringToInt 로직 중복 해결하기
-        //  해당 메서드, chooseRestartOrExit 메서드, validateThreeNaturalNumber 메서드
+        //  해당 메서드, chooseRestartOrExit 메서드
         int integerUserInput = Integer.valueOf(userInput);
         if (integerUserInput == RESTART_NUM || integerUserInput == EXIT_NUM) {
             passException++;
