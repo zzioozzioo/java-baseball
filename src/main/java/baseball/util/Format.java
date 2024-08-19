@@ -7,9 +7,8 @@ import static baseball.constant.ConstNumber.*;
 
 public class Format {
 
-    public static int StringToInt(String substring) {
-        int num = Integer.valueOf(substring);
-        return num;
+    public static int StringToInt(String targetString) {
+        return Integer.parseInt(targetString);
     }
 
     public static List<Integer> playerNumberStringToList(String userInput) {
