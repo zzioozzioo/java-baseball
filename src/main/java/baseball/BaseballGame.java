@@ -7,6 +7,7 @@ import java.util.List;
 import baseball.util.Computer;
 import baseball.util.GameResult;
 import baseball.util.User;
+import baseball.validation.InputValidation;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
@@ -19,6 +20,7 @@ public class BaseballGame {
     private final Computer computer = new Computer();
     private final User user = new User();
     private final GameResult gameResult = new GameResult();
+    private final InputValidation validation = new InputValidation();
 
     public BaseballGame() {
         System.out.println(START_GAME_MESSAGE);
@@ -53,7 +55,7 @@ public class BaseballGame {
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
         String userInput = readLine();
-        validateOneOrTwo(userInput);
+        validation.validateOneOrTwo(userInput);
 
         int integerUserInput = StringToInt(userInput);
 
