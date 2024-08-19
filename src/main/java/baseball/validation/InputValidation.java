@@ -1,63 +1,55 @@
 package baseball.validation;
 
-import baseball.BaseballGame;
-
 import java.util.List;
 
+import static baseball.Application.StringToInt;
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
-import static baseball.util.Format.*;
 
 public class InputValidation {
 
-    // TODO: exitGame()이 여기 성격과 맞나? 분리해야 할 것 같음
-
-    public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
+    public static void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         validateThreeNumberLength(playerNumberList);
         validateThreeNaturalNumber(playerNumberList);
         validateThreeNumberDuplicate(playerNumberList);
     }
 
-    public void validateThreeNumberLength(List<Integer> playerNumberList) {
+    public static void validateThreeNumberLength(List<Integer> playerNumberList) {
 
         if (playerNumberList.size() != NUM_LENGTH) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
     }
 
-    public void validateThreeNaturalNumber(List<Integer> playerNumberList) {
+    public static void validateThreeNaturalNumber(List<Integer> playerNumberList) {
 
         if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
     }
 
-    public void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
+    public static void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
     }
 
-    public void validateOneOrTwo(String userInput) {
+    public static void validateOneOrTwo(String userInput) {
 
         if (!userInput.chars().allMatch(Character::isDigit)) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
         int integerUserInput = StringToInt(userInput);
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
         if (userInput.isEmpty()) {
-            exitGame();
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
-    }
-
-    public void exitGame() {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 
 }
