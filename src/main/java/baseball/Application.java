@@ -30,7 +30,6 @@ public class Application {
             while (true) {
                 List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
 
-                // TODO: 리스트로 미리 변경해서 validation 검사하는 게 효율적일 듯..
                 System.out.println(INPUT_NUMBER_MESSAGE);
 
                 playerNumberList = getPlayerNumbers(playerNumberList);
@@ -72,10 +71,9 @@ public class Application {
     private static List<Integer> playerNumberStringToInt(String userInput) {
         List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
 
-        // TODO: stream으로 풀 수 있는지 연구
-        // TODO: 여기서는 substring 사용에 이상이 없네...? 아까의 경우랑 비교해보기
         for (int i = 0; i < NUM_LENGTH; i++) {
-            playerNumberList.add(Integer.valueOf(userInput.substring(i, i + 1)));
+            int num = Integer.valueOf(userInput.substring(i, i + 1));
+            playerNumberList.add(num);
         }
 
         return playerNumberList;
@@ -141,9 +139,7 @@ public class Application {
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
         String userInput = readLine();
-        if (!isOneOrTwo(userInput)) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
+        isOneOrTwo(userInput);
 
         // TODO: 굳이 정수로 변환해야 할 필요가 있을까? 예외는 모두 isOneOrTwo에서 처리할 텐데 그냥 바꿔서 써도 되지 않을까?
         int integerUserInput = Integer.valueOf(userInput);
@@ -154,25 +150,21 @@ public class Application {
         return false;
     }
 
-    private static boolean isOneOrTwo(String userInput) {
+    // TODO: validation 패키지로 추출하기
+    private static void isOneOrTwo(String userInput) {
 
-        int passException = 0;
-        if (userInput.chars().allMatch(Character::isDigit)) {
-            passException++;
+        if (!userInput.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
         // TODO: StringToInt 로직 중복 해결하기
-        //  해당 메서드, chooseRestartOrExit 메서드
+        //  해당 메서드, playerNumberStringToInt 메서드
         int integerUserInput = Integer.valueOf(userInput);
-        if (integerUserInput == RESTART_NUM || integerUserInput == EXIT_NUM) {
-            passException++;
+        if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
-        if (userInput != "") {
-            passException++;
+        if (userInput.isEmpty()) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
 
-        if (passException == 3) { // 모든 예외 처리 통과
-            return true;
-        }
-        return false;
     }
 }
