@@ -63,26 +63,23 @@ public class Application {
     public static List<Integer> getPlayerNumbers(List<Integer> playerNumberList) {
         String userInput = readLine();
 
-        playerNumberList = playerNumberStringToInt(userInput);
+        playerNumberList = playerNumberStringToList(userInput);
         validateStringThreeNumberDuplicate(playerNumberList);
 
         return playerNumberList;
     }
 
-    public static List<Integer> playerNumberStringToInt(String userInput) {
+    public static List<Integer> playerNumberStringToList(String userInput) {
         List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
 
         for (int i = 0; i < NUM_LENGTH; i++) {
-//            int num = Integer.valueOf(userInput.substring(i, i + 1));
-            String substring = userInput.substring(i, i + 1);
-            int num = StringToInt(substring);
+            String targetString = userInput.substring(i, i + 1);
+            int num = StringToInt(targetString);
             playerNumberList.add(num);
         }
 
         return playerNumberList;
     }
-
-
 
     public static int countStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
         int strike = 0;
@@ -146,7 +143,6 @@ public class Application {
         String userInput = readLine();
         validateOneOrTwo(userInput);
 
-        // TODO: 굳이 정수로 변환해야 할 필요가 있을까? 예외는 모두 isOneOrTwo에서 처리할 텐데 그냥 바꿔서 써도 되지 않을까?
         int integerUserInput = StringToInt(userInput);
 
         if (integerUserInput == RESTART_NUM) {
