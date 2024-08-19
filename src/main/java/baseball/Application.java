@@ -4,9 +4,10 @@ package baseball;
 import java.util.ArrayList;
 import java.util.List;
 
-import static baseball.validation.InputValidation.validateStringThreeNumberDuplicate;
 import static camp.nextstep.edu.missionutils.Console.*;
 import static camp.nextstep.edu.missionutils.Randoms.*;
+
+import static baseball.validation.InputValidation.*;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
@@ -47,7 +48,7 @@ public class Application {
         }
     }
 
-    private static List<Integer> getRandomComputerNumbers() {
+    public static List<Integer> getRandomComputerNumbers() {
         List<Integer> computer = new ArrayList<>();
         while (computer.size() < NUM_LENGTH) {
             int randomNumber = pickNumberInRange(FIRST_RANGE, LAST_RANGE);
@@ -68,18 +69,22 @@ public class Application {
         return playerNumberList;
     }
 
-    private static List<Integer> playerNumberStringToInt(String userInput) {
+    public static List<Integer> playerNumberStringToInt(String userInput) {
         List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
 
         for (int i = 0; i < NUM_LENGTH; i++) {
-            int num = Integer.valueOf(userInput.substring(i, i + 1));
+//            int num = Integer.valueOf(userInput.substring(i, i + 1));
+            String substring = userInput.substring(i, i + 1);
+            int num = StringToInt(substring);
             playerNumberList.add(num);
         }
 
         return playerNumberList;
     }
 
-    private static int countStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
+
+
+    public static int countStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
         int strike = 0;
         for (int i = 0; i < NUM_LENGTH; i++) {
             if (isDigitStrike(randomComputerNumberList, playerNumberList, i)) {
@@ -89,7 +94,7 @@ public class Application {
         return strike;
     }
 
-    private static boolean isDigitStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList, int index) {
+    public static boolean isDigitStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList, int index) {
         int randomComputerNumberDigit = randomComputerNumberList.get(index);
         int playerNumberDigit = playerNumberList.get(index);
 
@@ -99,7 +104,7 @@ public class Application {
         return false;
     }
 
-    private static int countBall(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
+    public static int countBall(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
         int ball = 0;
         for (int i = 0; i < NUM_LENGTH; i++) {
             if (isDigitBall(randomComputerNumberList, playerNumberList, i)) {
@@ -109,7 +114,7 @@ public class Application {
         return ball;
     }
 
-    private static boolean isDigitBall(List<Integer> randomComputerNumberList, List<Integer> playerNumberList, int index) {
+    public static boolean isDigitBall(List<Integer> randomComputerNumberList, List<Integer> playerNumberList, int index) {
         int randomComputerNumberDigit = randomComputerNumberList.get(index);
         int playerNumberDigit = playerNumberList.get(index);
 
@@ -121,7 +126,7 @@ public class Application {
         return false;
     }
 
-    private static boolean isGameSuccess(int strike, int ball) {
+    public static boolean isGameSuccess(int strike, int ball) {
         if (strike == 0 && ball == 0) {
             System.out.println(NOTHING);
             return false;
@@ -135,14 +140,14 @@ public class Application {
         return false;
     }
 
-    private static boolean restartGame() {
+    public static boolean restartGame() {
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
         String userInput = readLine();
-        isOneOrTwo(userInput);
+        validateOneOrTwo(userInput);
 
         // TODO: 굳이 정수로 변환해야 할 필요가 있을까? 예외는 모두 isOneOrTwo에서 처리할 텐데 그냥 바꿔서 써도 되지 않을까?
-        int integerUserInput = Integer.valueOf(userInput);
+        int integerUserInput = StringToInt(userInput);
 
         if (integerUserInput == RESTART_NUM) {
             return true;
@@ -150,21 +155,10 @@ public class Application {
         return false;
     }
 
-    // TODO: validation 패키지로 추출하기
-    private static void isOneOrTwo(String userInput) {
-
-        if (!userInput.chars().allMatch(Character::isDigit)) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
-        // TODO: StringToInt 로직 중복 해결하기
-        //  해당 메서드, playerNumberStringToInt 메서드
-        int integerUserInput = Integer.valueOf(userInput);
-        if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
-        if (userInput.isEmpty()) {
-            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-        }
-
+    public static int StringToInt(String substring) {
+        int num = Integer.valueOf(substring);
+        return num;
     }
+
+
 }

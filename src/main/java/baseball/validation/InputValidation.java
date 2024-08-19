@@ -2,9 +2,9 @@ package baseball.validation;
 
 import java.util.List;
 
-import static baseball.constant.ConstMessage.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE;
+import static baseball.Application.StringToInt;
+import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
-import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class InputValidation {
 
@@ -34,6 +34,22 @@ public class InputValidation {
         if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
             throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
         }
+    }
+
+    public static void validateOneOrTwo(String userInput) {
+
+        if (!userInput.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+        }
+
+        int integerUserInput = StringToInt(userInput);
+        if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+        }
+        if (userInput.isEmpty()) {
+            throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+        }
+
     }
 
 }
