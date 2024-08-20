@@ -56,7 +56,7 @@ public class GameResult {
         }
         if (strike == NUM_LENGTH) {
             System.out.println(NUM_LENGTH + STRIKE);
-            System.out.println(ALL_STRIKE_AND_EXIT_MESSAGE);
+            System.out.println(SUCCESS_MESSAGE);
             return true;
         }
         System.out.println(ball + BALL + " " + strike + STRIKE);
