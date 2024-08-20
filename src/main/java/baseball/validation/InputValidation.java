@@ -1,58 +1,59 @@
 package baseball.validation;
 
+import baseball.util.Format;
+import baseball.util.GameController;
+
 import java.util.List;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
-import static baseball.util.Format.*;
 
 public class InputValidation {
 
-    public static void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
+    private final Format format = new Format();
+    private final GameController gameController = new GameController();
+
+    public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         validateThreeNumberLength(playerNumberList);
         validateThreeNaturalNumber(playerNumberList);
         validateThreeNumberDuplicate(playerNumberList);
     }
 
-    public static void validateThreeNumberLength(List<Integer> playerNumberList) {
+    public void validateThreeNumberLength(List<Integer> playerNumberList) {
 
         if (playerNumberList.size() != NUM_LENGTH) {
-            exitGame();
+            gameController.exitGame();
         }
     }
 
-    public static void validateThreeNaturalNumber(List<Integer> playerNumberList) {
+    public void validateThreeNaturalNumber(List<Integer> playerNumberList) {
 
         if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            exitGame();
+            gameController.exitGame();
         }
     }
 
-    public static void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
+    public void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            exitGame();
+            gameController.exitGame();
         }
     }
 
-    public static void validateOneOrTwo(String userInput) {
+    public void validateOneOrTwo(String userInput) {
 
         if (!userInput.chars().allMatch(Character::isDigit)) {
-            exitGame();
+            gameController.exitGame();
         }
 
-        int integerUserInput = StringToInt(userInput);
+        int integerUserInput = format.StringToInt(userInput);
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
-            exitGame();
+            gameController.exitGame();
         }
         if (userInput.isEmpty()) {
-            exitGame();
+            gameController.exitGame();
         }
-    }
-
-    public static void exitGame() {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 
 }
