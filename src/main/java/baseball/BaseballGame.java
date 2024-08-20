@@ -17,7 +17,7 @@ public class BaseballGame {
     private final User user = new User();
     private final GameResult gameResult = new GameResult();
     private final Validator validation = new Validator();
-    private final Format format = new Format();
+    private final Converter converter = new Converter();
 
     public BaseballGame() {
         System.out.println(START_GAME_MESSAGE);
@@ -37,6 +37,8 @@ public class BaseballGame {
     }
 
     private void playOneRound() {
+
+        // TODO: 세부 기능 메서드로 분리
 
         List<Integer> randomComputerNumberList = computer.getRandomComputerNumbers();
 
@@ -63,7 +65,7 @@ public class BaseballGame {
         String userInput = readLine();
         validation.validateOneOrTwo(userInput);
 
-        int integerUserInput = format.toInt(userInput);
+        int integerUserInput = converter.toInt(userInput);
 
         if (integerUserInput == RESTART_NUM) {
             return true;

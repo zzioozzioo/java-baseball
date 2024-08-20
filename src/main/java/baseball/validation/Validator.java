@@ -1,6 +1,6 @@
 package baseball.validation;
 
-import baseball.util.Format;
+import baseball.util.Converter;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import static baseball.constant.ConstNumber.*;
 
 public class Validator {
 
-    private final Format format = new Format();
+    private final Converter converter = new Converter();
 
     public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
 
@@ -45,7 +45,7 @@ public class Validator {
             exitGameByValidation();
         }
 
-        int integerUserInput = format.toInt(userInput);
+        int integerUserInput = converter.toInt(userInput);
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
             exitGameByValidation();
         }
