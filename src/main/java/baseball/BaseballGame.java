@@ -14,7 +14,7 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 public class BaseballGame {
 
     private final Computer computer = new Computer();
-    private final User user = new User();
+    private final Player player = new Player();
     private final GameResult gameResult = new GameResult();
     private final Validator validation = new Validator();
     private final Converter converter = new Converter();
@@ -47,7 +47,7 @@ public class BaseballGame {
 
             System.out.println(INPUT_NUMBER_MESSAGE);
 
-            playerNumberList = user.getPlayerNumbers(playerNumberList);
+            playerNumberList = player.getPlayerNumbers(playerNumberList);
 
             // 게임 스코어 계산
             int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);

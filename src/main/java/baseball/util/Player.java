@@ -6,7 +6,7 @@ import java.util.List;
 
 import static camp.nextstep.edu.missionutils.Console.*;
 
-public class User {
+public class Player {
 
     private final Validator validation = new Validator();
     private final Converter converter = new Converter();
