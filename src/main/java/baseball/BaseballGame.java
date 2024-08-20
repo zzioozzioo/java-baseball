@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import baseball.util.*;
-import baseball.validation.InputValidation;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
-import static camp.nextstep.edu.missionutils.Console.*;
 
 public class BaseballGame {
 
@@ -24,31 +22,39 @@ public class BaseballGame {
 
     public void startGame() {
 
-        // TODO: 이 메서드에서 더 추출할 부분이 없는지 고민
         while (true) {
 
-            List<Integer> randomComputerNumberList = computer.getRandomComputerNumbers();
+            // 게임 한 라운드 진행
+            playOneRound();
 
-            while (true) {
-                List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
-
-                System.out.println(INPUT_NUMBER_MESSAGE);
-
-                playerNumberList = user.getPlayerNumbers(playerNumberList);
-
-                int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);
-                int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
-
-                if (gameResult.isGameSuccess(strike, ball)) {
-                    break;
-                }
-            }
+            // 게임 재시작 여부 체크
             if (!gameController.restartGame()) {
                 return;
             }
         }
     }
 
+    private void playOneRound() {
+        // 컴퓨터에서 랜덤 숫자 생성
+        List<Integer> randomComputerNumberList = computer.getRandomComputerNumbers();
+
+        while (true) {
+            // 사용자 랜덤 숫자 생성
+            List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
+
+            System.out.println(INPUT_NUMBER_MESSAGE);
+
+            playerNumberList = user.getPlayerNumbers(playerNumberList);
+
+            // 게임 스코어 계산
+            int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);
+            int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
+
+            if (gameResult.isGameSuccess(strike, ball)) {
+                break;
+            }
+        }
+    }
 
 
 }
