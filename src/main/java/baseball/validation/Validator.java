@@ -1,17 +1,15 @@
 package baseball.validation;
 
 import baseball.util.Format;
-import baseball.util.GameController;
 
 import java.util.List;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.*;
 
-public class InputValidation {
+public class Validator {
 
     private final Format format = new Format();
-    private final GameController gameController = new GameController();
 
     public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
 
@@ -23,37 +21,41 @@ public class InputValidation {
     public void validateThreeNumberLength(List<Integer> playerNumberList) {
 
         if (playerNumberList.size() != NUM_LENGTH) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
     }
 
     public void validateThreeNaturalNumber(List<Integer> playerNumberList) {
 
         if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
     }
 
     public void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
     }
 
     public void validateOneOrTwo(String userInput) {
 
         if (!userInput.chars().allMatch(Character::isDigit)) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
 
-        int integerUserInput = format.StringToInt(userInput);
+        int integerUserInput = format.toInt(userInput);
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
         if (userInput.isEmpty()) {
-            gameController.exitGame();
+            exitGameByValidation();
         }
+    }
+
+    public void exitGameByValidation() {
+        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 
 }
