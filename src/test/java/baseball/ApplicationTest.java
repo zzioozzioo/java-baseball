@@ -115,10 +115,10 @@ class ApplicationTest extends NsTest {
         String wrongInputString = "d";
 
         //when & then
-        assertThatCode(() -> validator.validateOneOrTwo(correctInputString))
+        assertThatCode(() -> validator.isNumeric(correctInputString))
                 .doesNotThrowAnyException();
 
-        assertThatThrownBy(() -> validator.validateOneOrTwo(wrongInputString))
+        assertThatThrownBy(() -> validator.isNumeric(wrongInputString))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE);
     }
@@ -133,13 +133,13 @@ class ApplicationTest extends NsTest {
         String wrongInputString = "3";
 
         //when & then
-        assertThatCode(() -> validator.validateOneOrTwo(correctInputString1))
+        assertThatCode(() -> validator.isOneOrTwo(correctInputString1))
                 .doesNotThrowAnyException();
 
-        assertThatCode(() -> validator.validateOneOrTwo(correctInputString2))
+        assertThatCode(() -> validator.isOneOrTwo(correctInputString2))
                 .doesNotThrowAnyException();
 
-        assertThatThrownBy(() -> validator.validateOneOrTwo(wrongInputString))
+        assertThatThrownBy(() -> validator.isOneOrTwo(wrongInputString))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE);
     }
