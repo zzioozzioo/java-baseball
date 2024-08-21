@@ -49,9 +49,6 @@ public class Validator {
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
             exitGameByValidation();
         }
-        if (userInput.isEmpty()) {
-            exitGameByValidation();
-        }
     }
 
     public void exitGameByValidation() {

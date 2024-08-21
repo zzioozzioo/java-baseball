@@ -144,24 +144,6 @@ class ApplicationTest extends NsTest {
                 .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 
-    // TODO: 빈칸 입력이어도 위에 있는 if문들에서 잡아주는데, 불필요하지 않나?
-    @Test
-    @DisplayName("재시작 혹은 종료 선택 입력값 빈칸 테스트")
-    void RestartNumber_isBlank() throws Exception {
-        //given
-        Validator validator = new Validator();
-        String correctInputString1 = "1";
-        String wrongInputString = " ";
-
-        //when & then
-        assertThatCode(() -> validator.validateOneOrTwo(correctInputString1))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> validator.validateOneOrTwo(wrongInputString))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
-    }
-
     @Override
     public void runMain() {
         Application.main(new String[]{});
