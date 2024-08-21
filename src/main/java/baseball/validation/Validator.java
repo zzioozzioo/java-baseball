@@ -14,7 +14,7 @@ public class Validator {
     public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         validateThreeNumberLength(playerNumberList);
-        validateThreeNaturalNumber(playerNumberList);
+        validateThreeNumberRange(playerNumberList);
         validateThreeNumberDuplicate(playerNumberList);
     }
 
@@ -25,7 +25,7 @@ public class Validator {
         }
     }
 
-    public void validateThreeNaturalNumber(List<Integer> playerNumberList) {
+    public void validateThreeNumberRange(List<Integer> playerNumberList) {
 
         if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
             exitGameByValidation();
