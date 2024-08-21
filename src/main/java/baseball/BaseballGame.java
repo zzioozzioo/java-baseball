@@ -4,7 +4,10 @@ package baseball;
 import java.util.ArrayList;
 import java.util.List;
 
-import baseball.util.*;
+import baseball.util.Computer;
+import baseball.util.Converter;
+import baseball.util.GameResult;
+import baseball.util.Player;
 import baseball.validation.Validator;
 
 import static baseball.constant.ConstMessage.*;
@@ -16,7 +19,7 @@ public class BaseballGame {
     private final Computer computer = new Computer();
     private final Player player = new Player();
     private final GameResult gameResult = new GameResult();
-    private final Validator validation = new Validator();
+    private final Validator validator = new Validator();
     private final Converter converter = new Converter();
 
     public BaseballGame() {
@@ -26,10 +29,9 @@ public class BaseballGame {
     public void startGame() {
 
         while (true) {
-            // 게임 한 라운드 진행
+
             playOneRound();
 
-            // 게임 재시작 여부 체크
             if (!restartGame()) {
                 return;
             }
@@ -37,8 +39,6 @@ public class BaseballGame {
     }
 
     private void playOneRound() {
-
-        // TODO: 세부 기능 메서드로 분리
 
         List<Integer> randomComputerNumberList = computer.getRandomComputerNumbers();
 
@@ -49,21 +49,28 @@ public class BaseballGame {
 
             playerNumberList = player.getPlayerNumbers(playerNumberList);
 
-            // 게임 스코어 계산
-            int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);
-            int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
-
-            if (gameResult.isGameSuccess(strike, ball)) {
+            if (scoreGame(randomComputerNumberList, playerNumberList))
                 break;
-            }
         }
     }
 
+    private boolean scoreGame(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
+
+        int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);
+        int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
+
+        if (gameResult.isGameSuccess(strike, ball)) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean restartGame() {
+
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
         String userInput = readLine();
-        validation.validateOneOrTwo(userInput);
+        validator.validateOneOrTwo(userInput);
 
         int integerUserInput = converter.toInt(userInput);
 
