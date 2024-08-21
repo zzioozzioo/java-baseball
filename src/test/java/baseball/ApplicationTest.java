@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static baseball.constant.ConstMessage.ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE;
+import static baseball.constant.ConstMessage.*;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.*;
@@ -65,11 +65,11 @@ class ApplicationTest extends NsTest {
 
         assertThatThrownBy(() -> validator.validateThreeNumberLength(moreInputList))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_NUMBER_LENGTH_MESSAGE);
 
         assertThatThrownBy(() -> validator.validateThreeNumberLength(lessInputList))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_NUMBER_LENGTH_MESSAGE);
     }
 
     @Test
@@ -86,7 +86,7 @@ class ApplicationTest extends NsTest {
 
         assertThatThrownBy(() -> validator.validateThreeNumberRange(outOfRangeInputList))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_NUMBER_RANGE_MESSAGE);
     }
 
     @Test
@@ -103,7 +103,7 @@ class ApplicationTest extends NsTest {
 
         assertThatThrownBy(() -> validator.validateThreeNumberDuplicate(duplicatedInputList))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
     }
 
     @Test
@@ -120,7 +120,7 @@ class ApplicationTest extends NsTest {
 
         assertThatThrownBy(() -> validator.validateOneOrTwo(wrongInputString))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE);
     }
 
     @Test
@@ -141,7 +141,7 @@ class ApplicationTest extends NsTest {
 
         assertThatThrownBy(() -> validator.validateOneOrTwo(wrongInputString))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
+                .hasMessageContaining(VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE);
     }
 
     @Override

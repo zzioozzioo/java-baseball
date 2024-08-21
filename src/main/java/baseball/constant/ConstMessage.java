@@ -6,7 +6,17 @@ public final class ConstMessage {
 
     public static final String INPUT_NUMBER_MESSAGE = "숫자를 입력해주세요: ";
 
-    public static final String ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "잘못된 입력입니다. 애플리케이션을 종료합니다.";
+//    public static final String ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE = "잘못된 입력입니다. 애플리케이션을 종료합니다.";
+
+    public static final String VALIDATE_NUMBER_LENGTH_MESSAGE = "숫자의 개수가 맞지 않습니다. 애플리케이션을 종료합니다.";
+
+    public static final String VALIDATE_NUMBER_RANGE_MESSAGE = "숫자가 범위에 맞지 않습니다. 애플리케이션을 종료합니다.";
+
+    public static final String VALIDATE_NUMBER_DUPLICATE_MESSAGE = "숫자가 중복되었습니다. 애플리케이션을 종료합니다.";
+
+    public static final String VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE = "숫자가 아닙니다. 애플리케이션을 종료합니다.";
+
+    public static final String VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE = "옳지 않은 숫자입니다. 애플리케이션을 종료합니다.";
 
     public static final String NOTHING = "낫싱";
 

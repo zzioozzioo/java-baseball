@@ -21,38 +21,34 @@ public class Validator {
     public void validateThreeNumberLength(List<Integer> playerNumberList) {
 
         if (playerNumberList.size() != NUM_LENGTH) {
-            exitGameByValidation();
+            throw new IllegalArgumentException(VALIDATE_NUMBER_LENGTH_MESSAGE);
         }
     }
 
     public void validateThreeNumberRange(List<Integer> playerNumberList) {
 
         if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            exitGameByValidation();
+            throw new IllegalArgumentException(VALIDATE_NUMBER_RANGE_MESSAGE);
         }
     }
 
     public void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
 
         if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            exitGameByValidation();
+            throw new IllegalArgumentException(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
         }
     }
 
     public void validateOneOrTwo(String userInput) {
 
         if (!userInput.chars().allMatch(Character::isDigit)) {
-            exitGameByValidation();
+            throw new IllegalArgumentException(VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE);
         }
 
         int integerUserInput = converter.toInt(userInput);
         if (integerUserInput != RESTART_NUM && integerUserInput != EXIT_NUM) {
-            exitGameByValidation();
+            throw new IllegalArgumentException(VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE);
         }
-    }
-
-    public void exitGameByValidation() {
-        throw new IllegalArgumentException(ILLEGAL_ARGUMENT_EXCEPTION_MESSAGE);
     }
 
 }
