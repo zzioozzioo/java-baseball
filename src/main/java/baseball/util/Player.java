@@ -4,11 +4,11 @@ import baseball.validation.Validator;
 
 import java.util.List;
 
-import static camp.nextstep.edu.missionutils.Console.*;
+import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class Player {
 
-    private final Validator validation = new Validator();
+    private final Validator validator = new Validator();
     private final Converter converter = new Converter();
 
 
@@ -16,7 +16,7 @@ public class Player {
         String userInput = readLine();
 
         playerNumberList = converter.playerNumberToList(userInput);
-        validation.validateStringThreeNumberDuplicate(playerNumberList);
+        validator.validateStringThreeNumberDuplicate(playerNumberList);
 
         return playerNumberList;
     }
