@@ -21,7 +21,7 @@ public class Converter {
 
     public List<Integer> playerNumberToList(String userInput) {
 
-        List<Integer> playerNumberList = IntStream.range(0, NUM_LENGTH)
+        List<Integer> playerNumberList = IntStream.range(0, userInput.length())
                 .mapToObj(i -> userInput.substring(i, i + 1))
                 .map(this::toInt)
                 .collect(Collectors.toList());
