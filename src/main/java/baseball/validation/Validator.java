@@ -1,5 +1,6 @@
 package baseball.validation;
 
+import baseball.domain.Range;
 import baseball.util.Converter;
 
 import java.util.List;
@@ -10,34 +11,6 @@ import static baseball.constant.ConstNumber.*;
 public class Validator {
 
     private final Converter converter = new Converter();
-
-    public void validateStringThreeNumberDuplicate(List<Integer> playerNumberList) {
-
-        validateThreeNumberLength(playerNumberList);
-        validateThreeNumberRange(playerNumberList);
-        validateThreeNumberDuplicate(playerNumberList);
-    }
-
-    public void validateThreeNumberLength(List<Integer> playerNumberList) {
-
-        if (playerNumberList.size() != NUM_LENGTH) {
-            throw new IllegalArgumentException(VALIDATE_NUMBER_LENGTH_MESSAGE);
-        }
-    }
-
-    public void validateThreeNumberRange(List<Integer> playerNumberList) {
-
-        if (!playerNumberList.stream().allMatch(digit -> FIRST_RANGE <= digit && LAST_RANGE >= digit)) {
-            throw new IllegalArgumentException(VALIDATE_NUMBER_RANGE_MESSAGE);
-        }
-    }
-
-    public void validateThreeNumberDuplicate(List<Integer> playerNumberList) {
-
-        if (playerNumberList.stream().distinct().count() != playerNumberList.size()) {
-            throw new IllegalArgumentException(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
-        }
-    }
 
     public void validateOneOrTwo(String userInput) {
 
