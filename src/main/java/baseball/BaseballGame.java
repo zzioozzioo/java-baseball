@@ -1,10 +1,11 @@
 package baseball;
 
 
-import java.util.List;
+import java.util.Set;
 
 import baseball.domain.GameCommand;
 import baseball.domain.RandomNumber;
+import baseball.domain.Strike;
 import baseball.util.GameResult;
 import baseball.domain.PlayerNumber;
 
@@ -33,7 +34,7 @@ public class BaseballGame {
     private void playOneRound() {
 
         RandomNumber randomNumber = new RandomNumber();
-        randomNumber.generateRandomNumber();
+        randomNumber.generateRandomNumbers();
 
         PlayerNumber playerNumber = new PlayerNumber();
 
@@ -42,17 +43,18 @@ public class BaseballGame {
 
             playerNumber.generatePlayerNumbers();
 
-            if (scoreGame(randomNumber.getRandomNumber(), playerNumber.getPlayerNumbers()))
+            if (scoreGame(randomNumber.getRandomNumbers(), playerNumber.getPlayerNumbers()))
                 break;
         }
     }
 
-    private boolean scoreGame(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
+    private boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
 
-        int strike = gameResult.countStrike(randomComputerNumberList, playerNumberList);
+        Strike strike = new Strike();
+        strike.countStrike(randomNumbers, playerNumbers);
         int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
 
-        if (gameResult.isGameSuccess(strike, ball)) {
+        if (gameResult.isGameSuccess(strike.getStrike(), ball)) {
             return true;
         }
         return false;

@@ -7,26 +7,6 @@ import static baseball.constant.ConstNumber.*;
 
 public class GameResult {
 
-    public int countStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
-        int strike = 0;
-        for (int i = 0; i < NUM_LENGTH; i++) {
-            if (isDigitStrike(randomComputerNumberList, playerNumberList, i)) {
-                strike++;
-            }
-        }
-        return strike;
-    }
-
-    public boolean isDigitStrike(List<Integer> randomComputerNumberList, List<Integer> playerNumberList, int index) {
-        int randomComputerNumberDigit = randomComputerNumberList.get(index);
-        int playerNumberDigit = playerNumberList.get(index);
-
-        if (randomComputerNumberDigit == playerNumberDigit) {
-            return true;
-        }
-        return false;
-    }
-
     public int countBall(List<Integer> randomComputerNumberList, List<Integer> playerNumberList) {
         int ball = 0;
         for (int i = 0; i < NUM_LENGTH; i++) {
