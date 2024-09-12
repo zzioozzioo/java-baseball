@@ -3,21 +3,16 @@ package baseball;
 
 import java.util.List;
 
+import baseball.domain.GameCommand;
 import baseball.domain.RandomNumber;
-import baseball.util.Converter;
 import baseball.util.GameResult;
-import baseball.util.PlayerNumber;
-import baseball.validation.Validator;
+import baseball.domain.PlayerNumber;
 
 import static baseball.constant.ConstMessage.*;
-import static baseball.constant.ConstNumber.*;
-import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class BaseballGame {
 
     private final GameResult gameResult = new GameResult();
-    private final Validator validator = new Validator();
-    private final Converter converter = new Converter();
 
     public BaseballGame() {
         System.out.println(START_GAME_MESSAGE);
@@ -67,15 +62,10 @@ public class BaseballGame {
 
         System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
 
-        String userInput = readLine();
-        validator.validateOneOrTwo(userInput);
+        GameCommand gameCommand = new GameCommand();
+        gameCommand.generateGameCommand();
 
-        int integerUserInput = converter.toInt(userInput);
-
-        if (integerUserInput == RESTART_NUM) {
-            return true;
-        }
-        return false;
+        return gameCommand.getNumber() == GameCommand.RESTART_NUM;
     }
 
 
