@@ -4,13 +4,11 @@ package baseball;
 import java.util.Set;
 
 import baseball.domain.*;
-import baseball.util.GameResult;
+import baseball.domain.GameResult;
 
 import static baseball.constant.ConstMessage.*;
 
 public class BaseballGame {
-
-    private final GameResult gameResult = new GameResult();
 
     public BaseballGame() {
         System.out.println(START_GAME_MESSAGE);
@@ -49,10 +47,13 @@ public class BaseballGame {
 
         Strike strike = new Strike();
         Ball ball = new Ball();
+        GameResult gameResult = new GameResult();
+
         strike.countStrike(randomNumbers, playerNumbers);
         ball.countBall(randomNumbers, playerNumbers, strike);
 
-        return gameResult.isGameSuccess(strike.getStrike(), ball.getBall());
+        gameResult.isGameSuccess(strike.getStrike(), ball.getBall());
+        return gameResult.isSuccess();
     }
 
     public boolean restartGame() {
