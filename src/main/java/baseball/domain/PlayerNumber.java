@@ -1,6 +1,4 @@
-package baseball.util;
-
-import baseball.domain.Range;
+package baseball.domain;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +10,7 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class PlayerNumber {
 
-    private final Set<Integer> playerNumber = new HashSet<>();
+    private final HashSet<Integer> playerNumber = new HashSet<>();
 
     public Set<Integer> getPlayerNumbers() {
         return playerNumber;
@@ -20,15 +18,15 @@ public class PlayerNumber {
 
     public void generatePlayerNumbers() {
         String userInput = readLine();
-
         addPlayerNumbers(userInput);
         validateStringThreeNumberDuplicate();
     }
 
+    // Set은 중복 허용하지 않기 때문에 add 후에 원소 개수 검사하면 중복 확인 가능
     public void addPlayerNumbers(String userInput) {
         IntStream.range(0, userInput.length())
                 .map(i -> toInt(userInput.substring(i, i + 1)))
-                .forEach(playerNuㅎmber::add);
+                .forEach(playerNumber::add);
     }
 
     public int toInt(String targetString) {
@@ -40,12 +38,11 @@ public class PlayerNumber {
      */
     public void validateStringThreeNumberDuplicate() {
 
-        validateThreeNumberLength();
-        validateThreeNumberRange();
         validateThreeNumberDuplicate();
+        validateThreeNumberRange();
     }
 
-    public void validateThreeNumberLength() {
+    public void validateThreeNumberDuplicate() {
 
         if (playerNumber.size() != NUM_LENGTH) {
             throw new IllegalArgumentException(VALIDATE_NUMBER_LENGTH_MESSAGE);
@@ -59,11 +56,11 @@ public class PlayerNumber {
         }
     }
 
-    public void validateThreeNumberDuplicate() {
-
-        if (playerNumber.stream().distinct().count() != playerNumber.size()) {
-            throw new IllegalArgumentException(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
-        }
-    }
+//    public void validateThreeNumberDuplicate() {
+//
+//        if (playerNumber.stream().distinct().count() != playerNumber.size()) {
+//            throw new IllegalArgumentException(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
+//        }
+//    }
 
 }
