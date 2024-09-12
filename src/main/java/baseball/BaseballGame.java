@@ -1,13 +1,12 @@
 package baseball;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
-import baseball.util.Computer;
+import baseball.domain.RandomNumber;
 import baseball.util.Converter;
 import baseball.util.GameResult;
-import baseball.util.Player;
+import baseball.util.PlayerNumber;
 import baseball.validation.Validator;
 
 import static baseball.constant.ConstMessage.*;
@@ -16,8 +15,6 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 
 public class BaseballGame {
 
-    private final Computer computer = new Computer();
-    private final Player player = new Player();
     private final GameResult gameResult = new GameResult();
     private final Validator validator = new Validator();
     private final Converter converter = new Converter();
@@ -40,16 +37,17 @@ public class BaseballGame {
 
     private void playOneRound() {
 
-        List<Integer> randomComputerNumberList = computer.getRandomComputerNumbers();
+        RandomNumber randomNumber = new RandomNumber();
+        randomNumber.generateRandomNumber();
+
+        PlayerNumber playerNumber = new PlayerNumber();
 
         while (true) {
-            List<Integer> playerNumberList = new ArrayList<>(NUM_LENGTH);
-
             System.out.println(INPUT_NUMBER_MESSAGE);
 
-            playerNumberList = player.getPlayerNumbers(playerNumberList);
+            playerNumber.generatePlayerNumbers();
 
-            if (scoreGame(randomComputerNumberList, playerNumberList))
+            if (scoreGame(randomNumber.getRandomNumber(), playerNumber.getPlayerNumbers()))
                 break;
         }
     }
