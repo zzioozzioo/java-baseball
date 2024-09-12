@@ -3,11 +3,8 @@ package baseball;
 
 import java.util.Set;
 
-import baseball.domain.GameCommand;
-import baseball.domain.RandomNumber;
-import baseball.domain.Strike;
+import baseball.domain.*;
 import baseball.util.GameResult;
-import baseball.domain.PlayerNumber;
 
 import static baseball.constant.ConstMessage.*;
 
@@ -51,13 +48,11 @@ public class BaseballGame {
     private boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
 
         Strike strike = new Strike();
+        Ball ball = new Ball();
         strike.countStrike(randomNumbers, playerNumbers);
-        int ball = gameResult.countBall(randomComputerNumberList, playerNumberList);
+        ball.countBall(randomNumbers, playerNumbers, strike);
 
-        if (gameResult.isGameSuccess(strike.getStrike(), ball)) {
-            return true;
-        }
-        return false;
+        return gameResult.isGameSuccess(strike.getStrike(), ball.getBall());
     }
 
     public boolean restartGame() {
