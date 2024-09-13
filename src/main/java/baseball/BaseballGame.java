@@ -5,6 +5,7 @@ import java.util.Set;
 
 import baseball.domain.*;
 import baseball.domain.GameResult;
+import baseball.view.OutputView;
 
 import static baseball.constant.ConstMessage.*;
 
@@ -33,26 +34,31 @@ public class BaseballGame {
 
         PlayerNumber playerNumber = new PlayerNumber();
 
-        while (true) {
+        do {
             System.out.println(INPUT_NUMBER_MESSAGE);
 
             playerNumber.generatePlayerNumbers();
 
-            if (scoreGame(randomNumber.getRandomNumbers(), playerNumber.getPlayerNumbers()))
-                break;
-        }
+        } while (!scoreGame(randomNumber.getRandomNumbers(), playerNumber.getPlayerNumbers()));
     }
 
     private boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
 
-        Strike strike = new Strike();
-        Ball ball = new Ball();
+        StrikeChecker strikeChecker = new StrikeChecker();
+        Strike strike = new Strike(strikeChecker);
+
+        BallChecker ballChecker = new BallChecker(strikeChecker);
+        Ball ball = new Ball(ballChecker);
+
         GameResult gameResult = new GameResult();
+        OutputView outputView = new OutputView();
 
         strike.countStrike(randomNumbers, playerNumbers);
         ball.countBall(randomNumbers, playerNumbers, strike);
 
         gameResult.isGameSuccess(strike.getStrike(), ball.getBall());
+        outputView.printGameResult(gameResult);
+
         return gameResult.isSuccess();
     }
 
