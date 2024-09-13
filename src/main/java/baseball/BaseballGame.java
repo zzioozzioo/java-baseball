@@ -7,12 +7,12 @@ import baseball.domain.*;
 import baseball.domain.GameResult;
 import baseball.view.OutputView;
 
-import static baseball.constant.ConstMessage.*;
-
 public class BaseballGame {
 
+    OutputView outputView = new OutputView();
+
     public BaseballGame() {
-        System.out.println(START_GAME_MESSAGE);
+        outputView.startGameMessage();
     }
 
     public void startGame() {
@@ -27,22 +27,29 @@ public class BaseballGame {
         }
     }
 
-    private void playOneRound() {
+    public void playOneRound() {
+        RandomNumber randomNumber = getRandomNumber();
+        getPlayerNumber(randomNumber);
+    }
 
-        RandomNumber randomNumber = new RandomNumber();
-        randomNumber.generateRandomNumbers();
-
+    public void getPlayerNumber(RandomNumber randomNumber) {
         PlayerNumber playerNumber = new PlayerNumber();
-
         do {
-            System.out.println(INPUT_NUMBER_MESSAGE);
-
+            outputView.inputNumberMessage();
             playerNumber.generatePlayerNumbers();
 
         } while (!scoreGame(randomNumber.getRandomNumbers(), playerNumber.getPlayerNumbers()));
     }
 
-    private boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
+    public RandomNumber getRandomNumber() {
+        RandomNumber randomNumber = new RandomNumber();
+        randomNumber.generateRandomNumbers();
+        return randomNumber;
+    }
+
+    public boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
+
+        // TODO: 메서드 기능 분리. 너무 길다!!
 
         StrikeChecker strikeChecker = new StrikeChecker();
         Strike strike = new Strike(strikeChecker);
@@ -51,7 +58,6 @@ public class BaseballGame {
         Ball ball = new Ball(ballChecker);
 
         GameResult gameResult = new GameResult();
-        OutputView outputView = new OutputView();
 
         strike.countStrike(randomNumbers, playerNumbers);
         ball.countBall(randomNumbers, playerNumbers, strike);
@@ -63,8 +69,7 @@ public class BaseballGame {
     }
 
     public boolean restartGame() {
-
-        System.out.println(CHOOSE_RESTART_OR_EXIT_MESSAGE);
+        outputView.restartGameMessage();
 
         GameCommand gameCommand = new GameCommand();
         gameCommand.generateGameCommand();
