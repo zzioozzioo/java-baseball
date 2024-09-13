@@ -7,33 +7,49 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 public class InputView {
 
     public String readPlayerNumbers() {
-        String userInput = readLine().trim();
-        validateUserInput(userInput);
-        return userInput;
+        String playerNumbersInput = readLine().trim();
+        validatePlayerNumbers(playerNumbersInput);
+        return playerNumbersInput;
     }
 
-    public void validateUserInput(String userInput) {
-        validateHasValue(userInput);
-        validateIsNumeric(userInput);
-        validateNumberCount(userInput);
+    public void validatePlayerNumbers(String playerNumbersInput) {
+        validateHasValue(playerNumbersInput);
+        validateIsNumeric(playerNumbersInput);
+        validatePlayerNumbersCount(playerNumbersInput);
     }
 
-    public void validateHasValue(String userInput) {
-        if (userInput.isEmpty()) {
+    public void validateHasValue(String input) {
+        if (input.isEmpty()) {
             throw new IllegalArgumentException(INPUT_NUMBER_MESSAGE);
         }
     }
 
-    public void validateIsNumeric(String userInput) {
-        for (int i = 0; i < userInput.length(); i++) {
-            if (!Character.isDigit(userInput.charAt(i))) {
-                throw new IllegalArgumentException(IS_NOT_NUMBER);
-            }
+    public void validateIsNumeric(String input) {
+        if (!input.chars().allMatch(Character::isDigit)) {
+            throw new IllegalArgumentException(IS_NOT_NUMBER);
         }
     }
 
-    public void validateNumberCount(String userInput) {
-        if (userInput.length() != NUM_LENGTH) {
+    public void validatePlayerNumbersCount(String input) {
+        if (input.length() != NUM_LENGTH) {
+            throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
+        }
+    }
+
+    public String readGameCommand() {
+        String gameCommandInput = readLine().trim();
+        validateGameCommand(gameCommandInput);
+        return gameCommandInput;
+    }
+
+    public void validateGameCommand(String gameCommandInput) {
+        validateHasValue(gameCommandInput);
+        validateIsNumeric(gameCommandInput);
+        validateGameCommandNumberCount(gameCommandInput);
+    }
+
+    public void validateGameCommandNumberCount(String input) {
+        if (input.length() != 1) {
             throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
         }
     }
