@@ -9,25 +9,18 @@ import static camp.nextstep.edu.missionutils.Randoms.pickNumberInRange;
 public class RandomNumber {
     private final Set<Integer> randomNumber = new HashSet<>();
 
-    public Set<Integer> getRandomNumber() {
+    public Set<Integer> getRandomNumbers() {
         return randomNumber;
     }
 
-    public void generateRandomNumber() {
+    public void generateRandomNumbers() {
 
-        for (int i = 0; i < NUM_LENGTH; i++) {
+        while (randomNumber.size() < NUM_LENGTH) {
             int number = pickNumberInRange(Range.FIRST_RANGE.getNumber(), Range.LAST_RANGE.getNumber());
             addRandomNumber(number);
         }
     }
     public void addRandomNumber(int number) {
-        validateRandomNumber(number);
         randomNumber.add(number);
-    }
-
-    public void validateRandomNumber(int number) {
-        if (!randomNumber.contains(number)) {
-            randomNumber.add(number);
-        }
     }
 }
