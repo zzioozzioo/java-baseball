@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import static baseball.constant.ConstMessage.*;
 import static baseball.constant.ConstNumber.NUM_LENGTH;
+import static baseball.utility.Utility.toInt;
 
 public class PlayerNumber {
 
@@ -27,10 +28,6 @@ public class PlayerNumber {
         IntStream.range(0, userInput.length())
                 .map(i -> toInt(userInput.substring(i, i + 1)))
                 .forEach(playerNumber::add);
-    }
-
-    public int toInt(String targetString) {
-        return Integer.parseInt(targetString);
     }
 
     /**

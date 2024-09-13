@@ -3,7 +3,7 @@ package baseball.domain;
 import baseball.view.InputView;
 
 import static baseball.constant.ConstMessage.*;
-import static camp.nextstep.edu.missionutils.Console.readLine;
+import static baseball.utility.Utility.toInt;
 
 public class GameCommand {
 
@@ -21,10 +21,6 @@ public class GameCommand {
         String userInput = inputView.readGameCommand();
         validateOneOrTwo(userInput);
         this.number = toInt(userInput);
-    }
-
-    public int toInt(String targetString) {
-        return Integer.parseInt(targetString);
     }
 
     public void validateOneOrTwo(String userInput) {
