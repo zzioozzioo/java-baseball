@@ -23,7 +23,7 @@ public class Strike {
         Iterator<Integer> playerNumbersIterator = playerNumbers.iterator();
 
         for (int i = 0; i < NUM_LENGTH; i++) {
-            if (checker.checkDigit(randomNumbersIterator.next(), playerNumbersIterator.next(), playerNumbers)) {
+            if (checker.checkDigit(randomNumbersIterator.next(), playerNumbersIterator.next())) {
                 strike++;
             }
         }

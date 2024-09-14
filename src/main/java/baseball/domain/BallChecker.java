@@ -2,7 +2,7 @@ package baseball.domain;
 
 import java.util.Set;
 
-public class BallChecker implements DigitChecker {
+public class BallChecker implements BallDigitChecker {
 
     private final StrikeChecker strikeChecker;
 
@@ -17,6 +17,6 @@ public class BallChecker implements DigitChecker {
         // 스트라이크가 아닌 경우에만 볼을 카운트
         return randomNumberDigit != playerNumberDigit &&
                 playerNumbers.contains(randomNumberDigit) &&
-                !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit, playerNumbers);
+                !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
     }
 }

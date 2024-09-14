@@ -1,11 +1,10 @@
 package baseball.domain;
 
-import java.util.Set;
 
 public class StrikeChecker implements DigitChecker {
 
     @Override
-    public boolean checkDigit(int randomNumberDigit, int playerNumberDigit, Set<Integer> playerNumbers) {
+    public boolean checkDigit(int randomNumberDigit, int playerNumberDigit) {
         return randomNumberDigit == playerNumberDigit;
     }
 }
