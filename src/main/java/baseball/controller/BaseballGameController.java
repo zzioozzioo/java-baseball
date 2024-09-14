@@ -48,7 +48,7 @@ public class BaseballGameController {
     public boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
         StrikeChecker strikeChecker = new StrikeChecker();
         Strike strike = new Strike(strikeChecker);
-        BallChecker ballChecker = new BallChecker(strikeChecker);
+        BallChecker ballChecker = new BallChecker(strikeChecker, playerNumbers);
         Ball ball = new Ball(ballChecker);
 
         strike.countStrike(randomNumbers, playerNumbers);

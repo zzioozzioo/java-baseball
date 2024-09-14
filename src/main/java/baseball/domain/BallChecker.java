@@ -5,21 +5,30 @@ import java.util.Set;
 public class BallChecker implements DigitChecker {
 
     private final StrikeChecker strikeChecker;
+    private final Set<Integer> playerNumbers;
 
-    public BallChecker(StrikeChecker strikeChecker) {
+    public BallChecker(StrikeChecker strikeChecker, Set<Integer> playerNumbers) {
         this.strikeChecker = strikeChecker;
+        this.playerNumbers = playerNumbers;
     }
 
     @Override
     public boolean checkDigit(int randomNumberDigit, int playerNumberDigit) {
-        throw new UnsupportedOperationException("This method does not support this method");
+        return isEqual(randomNumberDigit, playerNumberDigit) &&
+                isInPlayerNumbers(randomNumberDigit, playerNumbers) &&
+                isStrike(randomNumberDigit, playerNumberDigit);
     }
 
-    @Override
-    public boolean checkDigit(int randomNumberDigit, int playerNumberDigit, Set<Integer> playerNumbers) {
-        return randomNumberDigit != playerNumberDigit &&
-                playerNumbers.contains(randomNumberDigit) &&
-                !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
+    public boolean isEqual(int randomNumberDigit, int playerNumberDigit) {
+        return randomNumberDigit != playerNumberDigit;
+    }
+
+    public boolean isInPlayerNumbers(int randomNumberDigit, Set<Integer> playerNumbers) {
+        return playerNumbers.contains(randomNumberDigit);
+    }
+
+    public boolean isStrike(int randomNumberDigit, int playerNumberDigit) {
+        return !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
     }
 
 }
