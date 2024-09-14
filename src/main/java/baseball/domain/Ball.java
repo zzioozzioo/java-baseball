@@ -17,13 +17,13 @@ public class Ball {
         return ball;
     }
 
-    public void countBall(Set<Integer> randomNumbers, Set<Integer> playerNumbers, Strike strike) {
+    public void countBall(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
 
         Iterator<Integer> randomNumbersIterator = randomNumbers.iterator();
         Iterator<Integer> playerNumbersIterator = playerNumbers.iterator();
 
         for (int i = 0; i < NUM_LENGTH; i++) {
-            if (checker.checkDigit(randomNumbersIterator, playerNumbersIterator, playerNumbers)) {
+            if (checker.checkDigit(randomNumbersIterator.next(), playerNumbersIterator.next(), playerNumbers)) {
                 ball++;
             }
         }

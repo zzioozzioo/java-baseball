@@ -1,6 +1,5 @@
 package baseball.domain;
 
-import java.util.Iterator;
 import java.util.Set;
 
 public class BallChecker implements DigitChecker {
@@ -13,13 +12,11 @@ public class BallChecker implements DigitChecker {
 
 
     @Override
-    public boolean checkDigit(Iterator<Integer> randomNumbersIterator, Iterator<Integer> playerNumbersIterator, Set<Integer> playerNumbers) {
-        int randomNumberDigit = randomNumbersIterator.next();
-        int playerNumberDigit = playerNumbersIterator.next();
+    public boolean checkDigit(int randomNumberDigit, int playerNumberDigit, Set<Integer> playerNumbers) {
 
         // 스트라이크가 아닌 경우에만 볼을 카운트
         return randomNumberDigit != playerNumberDigit &&
                 playerNumbers.contains(randomNumberDigit) &&
-                !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
+                !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit, playerNumbers);
     }
 }
