@@ -2,7 +2,7 @@ package baseball.domain;
 
 import java.util.Set;
 
-public class BallChecker implements BallDigitChecker {
+public class BallChecker implements DigitChecker {
 
     private final StrikeChecker strikeChecker;
 
@@ -10,13 +10,16 @@ public class BallChecker implements BallDigitChecker {
         this.strikeChecker = strikeChecker;
     }
 
+    @Override
+    public boolean checkDigit(int randomNumberDigit, int playerNumberDigit) {
+        throw new UnsupportedOperationException("This method does not support this method");
+    }
 
     @Override
     public boolean checkDigit(int randomNumberDigit, int playerNumberDigit, Set<Integer> playerNumbers) {
-
-        // 스트라이크가 아닌 경우에만 볼을 카운트
         return randomNumberDigit != playerNumberDigit &&
                 playerNumbers.contains(randomNumberDigit) &&
                 !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
     }
+
 }
