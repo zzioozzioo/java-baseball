@@ -1,17 +1,16 @@
-package baseball;
+package baseball.controller;
 
 
 import java.util.Set;
 
 import baseball.domain.*;
-import baseball.domain.GameResult;
 import baseball.view.OutputView;
 
-public class BaseballGame {
+public class BaseballGameController {
 
     OutputView outputView = new OutputView();
 
-    public BaseballGame() {
+    public BaseballGameController() {
         outputView.startGameMessage();
     }
 
@@ -20,7 +19,6 @@ public class BaseballGame {
         while (true) {
 
             playOneRound();
-
             if (!restartGame()) {
                 return;
             }
@@ -32,6 +30,12 @@ public class BaseballGame {
         getPlayerNumber(randomNumber);
     }
 
+    public RandomNumber getRandomNumber() {
+        RandomNumber randomNumber = new RandomNumber();
+        randomNumber.generateRandomNumbers();
+        return randomNumber;
+    }
+
     public void getPlayerNumber(RandomNumber randomNumber) {
         PlayerNumber playerNumber = new PlayerNumber();
         do {
@@ -41,28 +45,22 @@ public class BaseballGame {
         } while (!scoreGame(randomNumber.getRandomNumbers(), playerNumber.getPlayerNumbers()));
     }
 
-    public RandomNumber getRandomNumber() {
-        RandomNumber randomNumber = new RandomNumber();
-        randomNumber.generateRandomNumbers();
-        return randomNumber;
-    }
-
     public boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
-
-        // TODO: 메서드 기능 분리. 너무 길다!!
-
         StrikeChecker strikeChecker = new StrikeChecker();
         Strike strike = new Strike(strikeChecker);
-
         BallChecker ballChecker = new BallChecker(strikeChecker);
         Ball ball = new Ball(ballChecker);
 
-        GameResult gameResult = new GameResult();
-
         strike.countStrike(randomNumbers, playerNumbers);
-        ball.countBall(randomNumbers, playerNumbers, strike);
+        ball.countBall(randomNumbers, playerNumbers);
 
+        return generateGameResult(strike, ball);
+    }
+
+    public boolean generateGameResult(Strike strike, Ball ball) {
+        GameResult gameResult = new GameResult();
         gameResult.isGameSuccess(strike.getStrike(), ball.getBall());
+
         outputView.printGameResult(gameResult);
 
         return gameResult.isSuccess();
@@ -76,6 +74,5 @@ public class BaseballGame {
 
         return gameCommand.getNumber() == GameCommand.RESTART_NUM;
     }
-
 
 }
