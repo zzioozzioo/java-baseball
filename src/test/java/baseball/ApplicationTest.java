@@ -1,17 +1,20 @@
 package baseball;
 
-import baseball.util.Converter;
-import baseball.validation.Validator;
+import baseball.domain.*;
+import baseball.view.InputView;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static baseball.constant.ConstMessage.*;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInRangeTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ApplicationTest extends NsTest {
     @Test
@@ -36,112 +39,204 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
-    @DisplayName("문자열에서 정수 리스트로 변환 테스트")
-    void StringToInt() throws Exception {
+    @DisplayName("플레이어 정답 입력값_값 존재 테스트")
+    void PlayerNumbersHasValue() {
         //given
-        Converter converter = new Converter();
-        String inputString = "123";
+        InputView inputView = new InputView();
+        String nonEmptyString = "123";
+        String emptyString = "";
+
+        //when & then
+        assertThatCode(() -> inputView.validateHasValue(nonEmptyString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validateHasValue(emptyString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INPUT_NUMBER_MESSAGE);
+
+    }
+
+    @Test
+    @DisplayName("플레이어 정답 입력값_숫자 여부 테스트")
+    void ArePlayerNumbersNumeric() {
+        //given
+        InputView inputView = new InputView();
+        String numericString = "123";
+        String nonNumericString = "abc";
+
+        //when & then
+        assertThatCode(() -> inputView.validateIsNumeric(numericString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validateIsNumeric(nonNumericString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(IS_NOT_NUMBER);
+    }
+
+    @Test
+    @DisplayName("플레이어 정답 입력값_길이 테스트")
+    void PlayerNumbersLength() {
+        //given
+        InputView inputView = new InputView();
+        String validLengthString = "123";
+        String invalidLengthString = "1234";
+
+        //when & then
+        assertThatCode(() -> inputView.validatePlayerNumbersLength(validLengthString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validatePlayerNumbersLength(invalidLengthString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INVALID_NUMBER_LENGTH);
+
+    }
+
+    @Test
+    @DisplayName("플레이어 정답 입력값_중복 테스트")
+    void ArePlayerNumbersDuplicated() {
+        //given
+        PlayerNumber validPlayerNumber = new PlayerNumber();
+        validPlayerNumber.addPlayerNumbers("123");
+
+        //when & then
+        assertThatCode(validPlayerNumber::validateThreeNumberDuplicate)
+                .doesNotThrowAnyException();
+
+        //given
+        PlayerNumber invalidPlayerNumber = new PlayerNumber();
+        invalidPlayerNumber.addPlayerNumbers("122");
+
+        //when & then
+        assertThatThrownBy(invalidPlayerNumber::validateThreeNumberDuplicate)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(NUMBER_DUPLICATED);
+    }
+
+    @Test
+    @DisplayName("플레이어 정답 입력값_범위 테스트")
+    void PlayerNumbersInRange() {
+        //given
+        PlayerNumber validPlayerNumber = new PlayerNumber();
+        validPlayerNumber.addPlayerNumbers("123");
+
+        //when & then
+        assertThatCode(validPlayerNumber::validateThreeNumberRange)
+                .doesNotThrowAnyException();
+
+        //given
+        PlayerNumber invalidPlayerNumber = new PlayerNumber();
+        invalidPlayerNumber.addPlayerNumbers("120");
+
+        assertThatThrownBy(invalidPlayerNumber::validateThreeNumberRange)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INVALID_NUMBER_RANGE);
+    }
+
+    @Test
+    @DisplayName("재시작/종료 선택 입력값_값 존재 테스트")
+    void GameCommandHasValue() {
+        //given
+        InputView inputView = new InputView();
+        String nonEmptyString = "1";
+        String emptyString = "";
+
+        //when & then
+        assertThatCode(() -> inputView.validateHasValue(nonEmptyString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validateHasValue(emptyString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INPUT_NUMBER_MESSAGE);
+    }
+
+    @Test
+    @DisplayName("재시작/종료 선택 입력값_숫자 여부 테스트")
+    void IsGameCommandNumeric() {
+        //given
+        InputView inputView = new InputView();
+        String numericString = "1";
+        String nonNumericString = "ㄱㄴㄷ";
+
+        //when & then
+        assertThatCode(() -> inputView.validateIsNumeric(numericString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validateIsNumeric(nonNumericString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(IS_NOT_NUMBER);
+    }
+
+    @Test
+    @DisplayName("재시작/종료 선택 입력값_길이 테스트")
+    void GameCommandLength() {
+        //given
+        InputView inputView = new InputView();
+        String validLengthString = "1";
+        String invalidLengthString = "12";
+
+        //when & then
+        assertThatCode(() -> inputView.validateGameCommandLength(validLengthString))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> inputView.validateGameCommandLength(invalidLengthString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INVALID_NUMBER_LENGTH);
+
+    }
+
+    @Test
+    @DisplayName("재시작/종료 선택 입력값_올바른 숫자 선택 여부 테스트")
+    void GameCommandOneOrTwo() {
+        //given
+        GameCommand gameCommand = new GameCommand();
+        String validString1 = "1";
+        String validString2 = "2";
+        String invalidString = "3";
+
+        //when & then
+        assertThatCode(() -> gameCommand.validateOneOrTwo(validString1))
+                .doesNotThrowAnyException();
+
+        assertThatCode(() -> gameCommand.validateOneOrTwo(validString2))
+                .doesNotThrowAnyException();
+
+        assertThatThrownBy(() -> gameCommand.validateOneOrTwo(invalidString))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining(INVALID_NUMBER_ONE_OR_TWO);
+    }
+
+    @Test
+    @DisplayName("스트라이크 개수 세기 테스트")
+    void CountStrike() {
+        //given
+        Set<Integer> randomNumbers = new LinkedHashSet<>(Arrays.asList(1, 2, 3));
+        Set<Integer> playerNumbers = new LinkedHashSet<>(Arrays.asList(1, 2, 4));
+
+        StrikeChecker checker = new StrikeChecker();
+        Strike strike = new Strike(checker);
 
         //when
-        List<Integer> inputList = converter.playerNumberToList(inputString);
+        strike.countStrike(randomNumbers, playerNumbers);
 
         //then
-        List<Integer> expectedList = List.of(1, 2, 3);
-        assertThat(inputList).isEqualTo(expectedList);
+        assertEquals(2, strike.getStrike());
     }
 
     @Test
-    @DisplayName("사용자 입력값 길이 테스트")
-    void UserInputLength() throws Exception {
+    @DisplayName("볼 개수 세기 테스트")
+    void CountBall() {
         //given
-        Validator validator = new Validator();
-        List<Integer> correctInputList = List.of(1, 2, 3);
-        List<Integer> moreInputList = List.of(1, 2, 3, 4);
-        List<Integer> lessInputList = List.of(1, 2);
+        Set<Integer> randomNumbers = new LinkedHashSet<>(Arrays.asList(1, 2, 3));
+        Set<Integer> playerNumbers = new LinkedHashSet<>(Arrays.asList(2, 1, 4));
 
-        //when & then
-        assertThatCode(() -> validator.validateThreeNumberLength(correctInputList))
-                .doesNotThrowAnyException();
+        BallChecker checker = new BallChecker(randomNumbers);
+        Ball ball = new Ball(checker);
 
-        assertThatThrownBy(() -> validator.validateThreeNumberLength(moreInputList))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_NUMBER_LENGTH_MESSAGE);
+        //when
+        ball.countBall(randomNumbers, playerNumbers);
 
-        assertThatThrownBy(() -> validator.validateThreeNumberLength(lessInputList))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_NUMBER_LENGTH_MESSAGE);
-    }
-
-    @Test
-    @DisplayName("사용자 입력값 범위 테스트")
-    void UserInputRange() throws Exception {
-        //given
-        Validator validator = new Validator();
-        List<Integer> correctInputList = List.of(1, 2, 3);
-        List<Integer> outOfRangeInputList = List.of(0, 1, 2);
-
-        //when & then
-        assertThatCode(() -> validator.validateThreeNumberRange(correctInputList))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> validator.validateThreeNumberRange(outOfRangeInputList))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_NUMBER_RANGE_MESSAGE);
-    }
-
-    @Test
-    @DisplayName("사용자 입력값 중복 테스트")
-    void UserInputDuplicate() throws Exception {
-        //given
-        Validator validator = new Validator();
-        List<Integer> correctInputList = List.of(1, 2, 3);
-        List<Integer> duplicatedInputList = List.of(1, 2, 2);
-
-        //when & then
-        assertThatCode(() -> validator.validateThreeNumberDuplicate(correctInputList))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> validator.validateThreeNumberDuplicate(duplicatedInputList))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_NUMBER_DUPLICATE_MESSAGE);
-    }
-
-    @Test
-    @DisplayName("재시작 혹은 종료 선택 입력값 숫자 여부 테스트")
-    void RestartNumber_isDigit() throws Exception {
-        //given
-        Validator validator = new Validator();
-        String correctInputString = "1";
-        String wrongInputString = "d";
-
-        //when & then
-        assertThatCode(() -> validator.isNumeric(correctInputString))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> validator.isNumeric(wrongInputString))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE);
-    }
-
-    @Test
-    @DisplayName("재시작 혹은 종료 선택 입력값 올바른 숫자 선택 여부 테스트")
-    void RestartNumber_isOneOrTwo() throws Exception {
-        //given
-        Validator validator = new Validator();
-        String correctInputString1 = "1";
-        String correctInputString2 = "2";
-        String wrongInputString = "3";
-
-        //when & then
-        assertThatCode(() -> validator.isOneOrTwo(correctInputString1))
-                .doesNotThrowAnyException();
-
-        assertThatCode(() -> validator.isOneOrTwo(correctInputString2))
-                .doesNotThrowAnyException();
-
-        assertThatThrownBy(() -> validator.isOneOrTwo(wrongInputString))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE);
+        //then
+        assertEquals(2, ball.getBall());
     }
 
     @Override
