@@ -3,6 +3,7 @@ package baseball.domain;
 import baseball.view.InputView;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -12,7 +13,7 @@ import static baseball.utility.Utility.toInt;
 
 public class PlayerNumber {
 
-    private final Set<Integer> playerNumber = new HashSet<>();
+    private final Set<Integer> playerNumber = new LinkedHashSet<>();
 
     public Set<Integer> getPlayerNumbers() {
         return playerNumber;
@@ -21,7 +22,7 @@ public class PlayerNumber {
     public void generatePlayerNumbers() {
         InputView inputView = new InputView();
         addPlayerNumbers(inputView.readPlayerNumbers());
-        validateStringThreeNumberDuplicate();
+        validateThreeNumberDuplicatedAndInRange();
     }
 
     public void addPlayerNumbers(String userInput) {
@@ -33,7 +34,7 @@ public class PlayerNumber {
     /**
      * 유효성 검증
      */
-    public void validateStringThreeNumberDuplicate() {
+    public void validateThreeNumberDuplicatedAndInRange() {
 
         validateThreeNumberDuplicate();
         validateThreeNumberRange();
