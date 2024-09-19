@@ -1,6 +1,5 @@
 package baseball.controller;
 
-
 import java.util.Set;
 
 import baseball.domain.*;
@@ -27,7 +26,7 @@ public class BaseballGameController {
 
     public void playOneRound() {
         RandomNumber randomNumber = getRandomNumber();
-        getPlayerNumber(randomNumber);
+        getGameResult(randomNumber);
     }
 
     public RandomNumber getRandomNumber() {
@@ -36,7 +35,7 @@ public class BaseballGameController {
         return randomNumber;
     }
 
-    public void getPlayerNumber(RandomNumber randomNumber) {
+    public void getGameResult(RandomNumber randomNumber) {
         PlayerNumber playerNumber;
         do {
             playerNumber = new PlayerNumber();
@@ -49,8 +48,10 @@ public class BaseballGameController {
     public boolean scoreGame(Set<Integer> randomNumbers, Set<Integer> playerNumbers) {
         StrikeChecker strikeChecker = new StrikeChecker();
         Strike strike = new Strike(strikeChecker);
-        BallChecker ballChecker = new BallChecker(strikeChecker, playerNumbers);
+        BallChecker ballChecker = new BallChecker(randomNumbers);
         Ball ball = new Ball(ballChecker);
+
+        // TODO: 스트라이크 <-> 볼 잘못 인식하는 오류 발생
 
         strike.countStrike(randomNumbers, playerNumbers);
         ball.countBall(randomNumbers, playerNumbers);

@@ -2,33 +2,23 @@ package baseball.domain;
 
 import java.util.Set;
 
+import static baseball.utility.Utility.isEqual;
+
 public class BallChecker implements DigitChecker {
 
-    private final StrikeChecker strikeChecker;
-    private final Set<Integer> playerNumbers;
+    private final Set<Integer> randomNumbers;
 
-    public BallChecker(StrikeChecker strikeChecker, Set<Integer> playerNumbers) {
-        this.strikeChecker = strikeChecker;
-        this.playerNumbers = playerNumbers;
+    public BallChecker(Set<Integer> randomNumbers) {
+        this.randomNumbers = randomNumbers;
     }
 
     @Override
     public boolean checkDigit(int randomNumberDigit, int playerNumberDigit) {
-        return isEqual(randomNumberDigit, playerNumberDigit) &&
-                isInPlayerNumbers(randomNumberDigit, playerNumbers) &&
-                isStrike(randomNumberDigit, playerNumberDigit);
+        return !isEqual(randomNumberDigit, playerNumberDigit) &&
+                isInRandomNumbers(playerNumberDigit, randomNumbers);
     }
 
-    public boolean isEqual(int randomNumberDigit, int playerNumberDigit) {
-        return randomNumberDigit != playerNumberDigit;
+    public boolean isInRandomNumbers(int playerNumberDigit, Set<Integer> randomNumbers) {
+        return randomNumbers.contains(playerNumberDigit);
     }
-
-    public boolean isInPlayerNumbers(int randomNumberDigit, Set<Integer> playerNumbers) {
-        return playerNumbers.contains(randomNumberDigit);
-    }
-
-    public boolean isStrike(int randomNumberDigit, int playerNumberDigit) {
-        return !strikeChecker.checkDigit(randomNumberDigit, playerNumberDigit);
-    }
-
 }
