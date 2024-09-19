@@ -8,7 +8,9 @@ public final class ConstMessage {
 
     public static final String INPUT_NUMBER_MESSAGE = "숫자를 입력해주세요: ";
 
-    public static final String INVALID_NUMBER_SET = "중복되지 않은 숫자 세 개를 입력해야 합니다. 애플리케이션을 종료합니다.";
+    public static final String INVALID_NUMBER_LENGTH = "숫자의 길이가 옳지 않습니다. 애플리케이션을 종료합니다.";
+
+    public static final String NUMBER_DUPLICATED = "중복되지 않은 숫자 세 개를 입력해야 합니다. 애플리케이션을 종료합니다.";
 
     public static final String INVALID_NUMBER_RANGE = "숫자가 범위에 맞지 않습니다. 애플리케이션을 종료합니다.";
 

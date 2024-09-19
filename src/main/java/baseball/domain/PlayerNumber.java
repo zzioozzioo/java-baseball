@@ -2,7 +2,6 @@ package baseball.domain;
 
 import baseball.view.InputView;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -43,7 +42,7 @@ public class PlayerNumber {
     public void validateThreeNumberDuplicate() {
 
         if (playerNumber.size() != NUM_LENGTH) {
-            throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
+            throw new IllegalArgumentException(NUMBER_DUPLICATED);
         }
     }
 

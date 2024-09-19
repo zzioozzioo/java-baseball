@@ -32,7 +32,7 @@ public class InputView {
 
     public void validatePlayerNumbersLength(String input) {
         if (input.length() != NUM_LENGTH) {
-            throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
+            throw new IllegalArgumentException(INVALID_NUMBER_LENGTH);
         }
     }
 
@@ -50,7 +50,7 @@ public class InputView {
 
     public void validateGameCommandLength(String input) {
         if (input.length() != 1) {
-            throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
+            throw new IllegalArgumentException(INVALID_NUMBER_LENGTH);
         }
     }
 }
