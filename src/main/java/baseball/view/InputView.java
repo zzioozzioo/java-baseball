@@ -12,10 +12,10 @@ public class InputView {
         return playerNumbersInput;
     }
 
-    public void validatePlayerNumbers(String playerNumbersInput) {
-        validateHasValue(playerNumbersInput);
-        validateIsNumeric(playerNumbersInput);
-        validatePlayerNumbersCount(playerNumbersInput);
+    public void validatePlayerNumbers(String input) {
+        validateHasValue(input);
+        validateIsNumeric(input);
+        validatePlayerNumbersLength(input);
     }
 
     public void validateHasValue(String input) {
@@ -30,7 +30,7 @@ public class InputView {
         }
     }
 
-    public void validatePlayerNumbersCount(String input) {
+    public void validatePlayerNumbersLength(String input) {
         if (input.length() != NUM_LENGTH) {
             throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
         }
@@ -42,13 +42,13 @@ public class InputView {
         return gameCommandInput;
     }
 
-    public void validateGameCommand(String gameCommandInput) {
-        validateHasValue(gameCommandInput);
-        validateIsNumeric(gameCommandInput);
-        validateGameCommandNumberCount(gameCommandInput);
+    public void validateGameCommand(String input) {
+        validateHasValue(input);
+        validateIsNumeric(input);
+        validateGameCommandLength(input);
     }
 
-    public void validateGameCommandNumberCount(String input) {
+    public void validateGameCommandLength(String input) {
         if (input.length() != 1) {
             throw new IllegalArgumentException(INVALID_NUMBER_COUNT);
         }
