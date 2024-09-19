@@ -2,23 +2,19 @@ package baseball.constant;
 
 import baseball.domain.GameCommand;
 
-import static baseball.domain.GameCommand.RESTART_NUM;
-
 public final class ConstMessage {
 
     public static final String START_GAME_MESSAGE = "숫자 야구 게임을 시작합니다";
 
     public static final String INPUT_NUMBER_MESSAGE = "숫자를 입력해주세요: ";
 
-    public static final String VALIDATE_NUMBER_LENGTH_MESSAGE = "숫자의 개수가 맞지 않습니다. 애플리케이션을 종료합니다.";
+    public static final String INVALID_NUMBER_SET = "중복되지 않은 숫자 세 개를 입력해야 합니다. 애플리케이션을 종료합니다.";
 
-    public static final String VALIDATE_NUMBER_RANGE_MESSAGE = "숫자가 범위에 맞지 않습니다. 애플리케이션을 종료합니다.";
+    public static final String INVALID_NUMBER_RANGE = "숫자가 범위에 맞지 않습니다. 애플리케이션을 종료합니다.";
 
-    public static final String VALIDATE_NUMBER_DUPLICATE_MESSAGE = "숫자가 중복되었습니다. 애플리케이션을 종료합니다.";
+    public static final String IS_NOT_NUMBER = "숫자가 아닙니다. 애플리케이션을 종료합니다.";
 
-    public static final String VALIDATE_ONE_OR_TWO_IS_DIGIT_MESSAGE = "숫자가 아닙니다. 애플리케이션을 종료합니다.";
-
-    public static final String VALIDATE_ONE_OR_TWO_WRONG_NUM_MESSAGE = "옳지 않은 숫자입니다. 애플리케이션을 종료합니다.";
+    public static final String INVALID_NUMBER_ONE_OR_TWO = "옳지 않은 숫자입니다. 애플리케이션을 종료합니다.";
 
     public static final String NOTHING = "낫싱";
 
