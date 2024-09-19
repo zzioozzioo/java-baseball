@@ -6,4 +6,8 @@ public class Utility {
         return Integer.parseInt(targetString);
     }
 
+    public static boolean isEqual(int randomNumberDigit, int playerNumberDigit) {
+        return randomNumberDigit == playerNumberDigit;
+    }
+
 }
