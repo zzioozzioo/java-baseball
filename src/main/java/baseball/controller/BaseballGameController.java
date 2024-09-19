@@ -37,8 +37,9 @@ public class BaseballGameController {
     }
 
     public void getPlayerNumber(RandomNumber randomNumber) {
-        PlayerNumber playerNumber = new PlayerNumber();
+        PlayerNumber playerNumber;
         do {
+            playerNumber = new PlayerNumber();
             outputView.inputNumberMessage();
             playerNumber.generatePlayerNumbers();
 
