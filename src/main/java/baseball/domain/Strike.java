@@ -7,9 +7,9 @@ import static baseball.constant.ConstNumber.NUM_LENGTH;
 
 public class Strike {
     private int strike;
-    private final DigitChecker checker;
+    private final StrikeChecker checker;
 
-    public Strike(DigitChecker checker) {
+    public Strike(StrikeChecker checker) {
         this.checker = checker;
     }
 
